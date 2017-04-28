@@ -1,0 +1,69 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  plus                                  |
+|   \\  /    A nd           | Web:      www.OpenFOAM.com                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       volScalarField;
+    location    "0";
+    object      k;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+dimensions      [0 2 -2 0 0 0 0];
+
+internalField   uniform 3.75e-03;  // veio do sharpCrestedWeir
+
+boundaryField
+{
+  in 
+    {
+        type            fixedValue;
+       	value           uniform 3.75e-03;
+        //value           $internalField;
+	// intensity       0.05; // veio do waterChannel
+    }
+aboveIn 
+    {
+        type            inletOutlet;
+        //inletValue    $internalField;
+        //value          $internalField;
+	inletValue    uniform 3.75e-03;
+        value           uniform 3.75e-03;
+    }
+out
+    {
+        type            inletOutlet;
+        inletValue   uniform 3.75e-03;
+        value          uniform 3.75e-03;
+    }
+aboveOut
+    {
+        type            inletOutlet;
+        inletValue   uniform 3.75e-03;
+        value           uniform 3.75e-03;
+    }
+fundo
+    {
+        type            kqRWallFunction;
+       value           uniform 3.75e-03;
+    }
+atmosfera
+    {
+        type            inletOutlet;
+        inletValue      uniform 3.75e-03;
+        value           uniform 3.75e-03;
+    }
+    defaultFaces
+    {
+        type            empty;
+    }
+}
+
+
+// ************************************************************************* //

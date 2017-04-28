@@ -1,0 +1,74 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  plus                                  |
+|   \\  /    A nd           | Web:      www.OpenFOAM.com                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       volScalarField;
+    object      p_rgh;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+dimensions      [1 -1 -2 0 0 0 0];
+
+internalField   uniform 000;
+
+boundaryField
+{
+in
+    {
+        	type            totalPressure;
+        	p0              uniform 274680; //28 m upstream
+        	U               U;
+        	phi             phi;
+        	rho             rho;
+        	psi             none;
+        	gamma           1;
+        	value           uniform 0;
+    }
+aboveIn
+    {
+    		type 		outletInlet; //zeroGradient if vector points into domain, 0 if pointing out of domain
+    		outletValue 	uniform 0;
+    		value 		uniform 0;
+    }
+out 
+    {
+        	type            totalPressure;
+        	p0              uniform 156960; //16 m downstream
+        	U               U;
+        	phi             phi;
+        	rho             rho;
+        	psi             none;
+        	gamma           1;
+        	value           uniform 0;
+     }
+aboveOut
+    {
+    		type 		inletOutlet; //zeroGradient if vector points out of domain, 0 if pointing in
+    		inletValue 	uniform 0;
+    		value 		uniform 0;
+    }
+fundo
+    {
+        type            fixedFluxPressure;
+        value           uniform 0;
+    }
+atmosfera
+    {
+    		type 		inletOutlet; //zeroGradient if vector points out of domain, 0 if pointing in
+    		inletValue 	uniform 0;
+    		value 		uniform 0;        	
+    }
+defaultFaces
+    {
+        type            empty;
+    }
+}
+
+// ************************************************************************* //

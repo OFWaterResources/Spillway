@@ -1,0 +1,61 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+|       o          |                                                          |
+|    o     o       | HELYX-OS                                                  |
+|   o   O   o      | Version: v2.4.0                                           |
+|    o     o       | Web:     http://www.engys.com                            |
+|       o          |                                                          |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version 2.0;
+    format ascii;
+    class dictionary;
+    location system;
+    object fvSchemes;
+}
+
+    ddtSchemes
+    {
+        default Euler;
+    }
+
+    gradSchemes
+    {
+        default Gauss linear;
+	limitedGrad      cellLimited Gauss linear 1;  // sharpedCrestWeir
+    }
+
+divSchemes
+{
+  div(rhoPhi,U)  Gauss linearUpwind grad(U); //upwind; //limitedLinearV 1;
+  div(phi,alpha) Gauss vanLeer;              //upwind; //vanLeer;
+  div(phirb,alpha) Gauss interfaceCompression;
+  div(phi,k)       Gauss upwind;
+  div(phi,epsilon) Gauss upwind;
+  div((muEff*dev(T(grad(U))))) Gauss linear;
+  div((nuEff*dev2(T(grad(U))))) Gauss linear;
+  div(((rho*nuEff)*dev2(T(grad(U))))) Gauss linear;
+}
+
+    laplacianSchemes
+    {
+        default Gauss linear corrected;
+    }
+
+    interpolationSchemes
+    {
+        default linear;
+    }
+
+    snGradSchemes
+    {
+        default corrected;
+    }
+    
+    fluxRequired
+{
+    default         no;
+    p_rgh;
+    pcorr;
+    alpha.water;
+}
